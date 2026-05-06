@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sistem Pengurusan</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background-color: #ffffff; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
         iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
-    <iframe src="https://script.google.com/macros/s/AKfycbxd3r2oYXNH_hCqcdhIWg6jxIWd-sjyJorlN0802R9cjJsIVCI_Ek81x_ypYbFJ4kmc/exec"></iframe>
+    <script>
+        // Kod ini untuk ambil parameter ?page=admin dari URL GitHub
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+        let appUrl = "URL_APPS_SCRIPT_ANDA_DI_SINI";
+        
+        if(page) {
+            appUrl += "?page=" + page;
+        }
+        
+        document.write('<iframe src="' + appUrl + '"></iframe>');
+    </script>
 </body>
 </html>
