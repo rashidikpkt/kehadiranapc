@@ -52,37 +52,36 @@
     </a>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const page = urlParams.get('page');
-        
-        let baseAppUrl = "https://script.google.com/macros/s/AKfycbwHvP2KBvvIRqofHIVZuiGuk1hkJu2Hi5U-6Hrx-R8F7HPRsB7IepjUiqkGbxHcZsl2/exec";
-        
-        let finalUrl = baseAppUrl;
-        if(page) {
-            finalUrl += "?page=" + page;
-        }
-        
-        // Membina URL Account Chooser
-        const repairUrl = "https://accounts.google.com/AccountChooser?continue=" + encodeURIComponent(finalUrl); 
-        
-        const repairBtn = document.getElementById('repairLink');
-        repairBtn.href = repairUrl;
-        
-        // Paparkan butang selepas 4 saat
-        setTimeout(() => {
-          repairBtn.style.display = 'block';
-          
-          // Hilangkan butang selepas 7 saat dipaparkan
-          setTimeout(() => {
-            repairBtn.style.opacity = '0';
-            setTimeout(() => { 
-                repairBtn.style.display = 'none'; 
-            }, 500);
-          }, 7000);
-        }, 4000);
-        
-        // Render iframe
-        document.write('<iframe src="' + finalUrl + '"></iframe>');
-    </script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
+    
+    // 1. USE THE CLEANEST URL FOR THE IFRAME
+    // No /u/0/, no /a/kpkt.
+    let baseAppUrl = "https://script.google.com/macros/s/AKfycbwHvP2KBvvIRqofHIVZuiGuk1hkJu2Hi5U-6Hrx-R8F7HPRsB7IepjUiqkGbxHcZsl2/exec";
+    
+    let finalUrl = baseAppUrl;
+    if(page) {
+        finalUrl += "?page=" + page;
+    }
+    
+    // 2. THE "FORCE SELECT" BUTTON
+    // Instead of AccountChooser, we use "prompt=select". 
+    // This forces Google to treat the chosen account as the "Active" one for this session.
+    const repairUrl = finalUrl + (finalUrl.includes('?') ? '&' : '?') + "prompt=select"; 
+    
+    const repairBtn = document.getElementById('repairLink');
+    repairBtn.href = repairUrl;
+    
+    // Show button for 10 seconds, then hide
+    setTimeout(() => {
+      repairBtn.style.display = 'block';
+      setTimeout(() => {
+          repairBtn.style.opacity = '0';
+          setTimeout(() => { repairBtn.style.display = 'none'; }, 500);
+      }, 10000);
+    }, 3000);
+
+    document.write('<iframe src="' + finalUrl + '"></iframe>');
+</script>
 </body>
 </html>
