@@ -63,9 +63,9 @@
             finalUrl += "?page=" + page;
         }
         
-        // Link untuk 'Repair' yang memaksa pilihan akaun
-        // Kita tambah parameter authuser=0 atau prompt=select
-        const repairUrl = finalUrl + "?authuser=0"; 
+        // 2. Bina URL untuk 'Repair' menggunakan AccountChooser
+        // Kita letakkan link AccountChooser di depan finalUrl
+        const repairUrl = "https://accounts.google.com/AccountChooser?continue=" + encodeURIComponent(finalUrl); 
         
         const repairBtn = document.getElementById('repairLink');
         repairBtn.href = repairUrl;
