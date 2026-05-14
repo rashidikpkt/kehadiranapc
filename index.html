@@ -13,7 +13,7 @@
       margin: 0; padding: 0;
       height: 100%; width: 100%;
       overflow: hidden;
-      background: #8B0000; /* Merah Metallic mengikut tema baru anda */
+      background: #8B0000;
       font-family: sans-serif;
     }
 
@@ -25,23 +25,23 @@
       z-index: 1;
     }
 
-    /* Butang Repair untuk peranti bermasalah */
     .repair-btn {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 99;
-      background: rgba(192, 192, 192, 0.9); /* Silver */
-      color: #000;
-      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #8B0000;
+      padding: 12px 24px;
       border-radius: 30px;
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       border: 2px solid #8B0000;
-      display: none; /* Sembunyi secara default */
+      display: none;
+      transition: opacity 0.5s ease; /* Tambah ini supaya fade out smooth */
     }
   </style>
 </head>
@@ -55,7 +55,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page');
         
-        // JANGAN letak /u/0/ di sini untuk elak ralat pada device lain
         let baseAppUrl = "https://script.google.com/macros/s/AKfycbwHvP2KBvvIRqofHIVZuiGuk1hkJu2Hi5U-6Hrx-R8F7HPRsB7IepjUiqkGbxHcZsl2/exec";
         
         let finalUrl = baseAppUrl;
@@ -63,25 +62,26 @@
             finalUrl += "?page=" + page;
         }
         
-        // 2. Bina URL untuk 'Repair' menggunakan AccountChooser
-        // Kita letakkan link AccountChooser di depan finalUrl
+        // Membina URL Account Chooser
         const repairUrl = "https://accounts.google.com/AccountChooser?continue=" + encodeURIComponent(finalUrl); 
         
         const repairBtn = document.getElementById('repairLink');
         repairBtn.href = repairUrl;
         
-        // Tampilkan butang bantuan
+        // Paparkan butang selepas 4 saat
         setTimeout(() => {
           repairBtn.style.display = 'block';
           
-          // Auto-hide selepas 7 saat dipaparkan (beri masa lebih sikit untuk orang baca)
+          // Hilangkan butang selepas 7 saat dipaparkan
           setTimeout(() => {
             repairBtn.style.opacity = '0';
-            setTimeout(() => { repairBtn.style.display = 'none'; }, 500);
+            setTimeout(() => { 
+                repairBtn.style.display = 'none'; 
+            }, 500);
           }, 7000);
         }, 4000);
         
-        // Bina iframe secara dinamik
+        // Render iframe
         document.write('<iframe src="' + finalUrl + '"></iframe>');
     </script>
 </body>
