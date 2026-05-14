@@ -63,13 +63,22 @@
             finalUrl += "?page=" + page;
         }
         
-        // Masukkan URL ke dalam butang repair
+        // Link untuk 'Repair' yang memaksa pilihan akaun
+        // Kita tambah parameter authuser=0 atau prompt=select
+        const repairUrl = finalUrl + "&authuser=0"; 
+        
         const repairBtn = document.getElementById('repairLink');
-        repairBtn.href = finalUrl;
-
-        // Tampilkan butang repair selepas 4 saat (jika iframe gagal load/stuck)
+        repairBtn.href = repairUrl;
+        
+        // Tampilkan butang bantuan
         setTimeout(() => {
           repairBtn.style.display = 'block';
+          
+          // Auto-hide selepas 7 saat dipaparkan (beri masa lebih sikit untuk orang baca)
+          setTimeout(() => {
+            repairBtn.style.opacity = '0';
+            setTimeout(() => { repairBtn.style.display = 'none'; }, 500);
+          }, 7000);
         }, 4000);
         
         // Bina iframe secara dinamik
