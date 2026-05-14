@@ -3,50 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   <title>Sistem Kehadiran APC</title>
-
-  <!-- Favicon / icon tab browser -->
+  
   <link rel="icon" type="image/png" href="favico.png">
-
-  <!-- Untuk mobile / shortcut icon -->
-  <link rel="apple-touch-icon" href="favico.png">
-
-  <meta name="description" content="Sistem Pengesahan Kehadiran APC">
-  <meta name="theme-color" content="#2f3e2c">
+  <meta name="theme-color" content="#8B0000">
 
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
       overflow: hidden;
-      background: #2f3e2c;
+      background: #8B0000; /* Merah Metallic mengikut tema baru anda */
+      font-family: sans-serif;
     }
 
     iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border: none;
+      z-index: 1;
+    }
+
+    /* Butang Repair untuk peranti bermasalah */
+    .repair-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99;
+      background: rgba(192, 192, 192, 0.9); /* Silver */
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 2px solid #8B0000;
+      display: none; /* Sembunyi secara default */
     }
   </style>
 </head>
 <body>
+
+    <a id="repairLink" href="#" target="_blank" class="repair-btn">
+      ⚠️ Masalah Paparan? Klik Sini
+    </a>
+
     <script>
-        // Kod ini untuk ambil parameter ?page=admin dari URL GitHub
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page');
-        let appUrl = "https://script.google.com/macros/u/0/s/AKfycbwHvP2KBvvIRqofHIVZuiGuk1hkJu2Hi5U-6Hrx-R8F7HPRsB7IepjUiqkGbxHcZsl2/exec";
         
+        // JANGAN letak /u/0/ di sini untuk elak ralat pada device lain
+        let baseAppUrl = "https://script.google.com/macros/s/AKfycbwHvP2KBvvIRqofHIVZuiGuk1hkJu2Hi5U-6Hrx-R8F7HPRsB7IepjUiqkGbxHcZsl2/exec";
+        
+        let finalUrl = baseAppUrl;
         if(page) {
-            appUrl += "?page=" + page;
+            finalUrl += "?page=" + page;
         }
         
-        document.write('<iframe src="' + appUrl + '"></iframe>');
+        // Masukkan URL ke dalam butang repair
+        const repairBtn = document.getElementById('repairLink');
+        repairBtn.href = finalUrl;
+
+        // Tampilkan butang repair selepas 4 saat (jika iframe gagal load/stuck)
+        setTimeout(() => {
+          repairBtn.style.display = 'block';
+        }, 4000);
+        
+        // Bina iframe secara dinamik
+        document.write('<iframe src="' + finalUrl + '"></iframe>');
     </script>
 </body>
 </html>
